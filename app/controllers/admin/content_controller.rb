@@ -11,6 +11,17 @@ class Admin::ContentController < Admin::BaseController
     render :inline => "<%= raw auto_complete_result @items, 'name' %>"
   end
 
+  def merge
+    if !current_user.admin?
+      flash[:error] = _("Only administrators can merge articles.")
+    else
+      article = Article.find(params[:id])
+      article.merge_with(params[:merge_with])
+      redirect_to :action => 'index'
+    end
+  end
+
+
   def index
     @search = params[:search] ? params[:search] : {}
     
@@ -241,11 +252,4 @@ class Admin::ContentController < Admin::BaseController
     @resources = Resource.by_created_at
   end
 
-  def merge
-   if !current_user.admin?
-     flash[:error] = _("Only administrators can merge articles.")
-   else
-     @article.merge_with(params[:id])
-   end
- end
 end

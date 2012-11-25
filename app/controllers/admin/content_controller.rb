@@ -240,4 +240,12 @@ class Admin::ContentController < Admin::BaseController
   def setup_resources
     @resources = Resource.by_created_at
   end
+
+  def merge
+   if !current_user.admin?
+     flash[:error] = _("Only administrators can merge articles.")
+   else
+     @article.merge_with(params[:id])
+   end
+ end
 end

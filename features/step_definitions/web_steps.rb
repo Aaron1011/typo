@@ -41,12 +41,42 @@ Given /^the blog is set up$/ do
                 :profile_id => 1,
                 :name => 'admin',
                 :state => 'active'})
+
+  User.create!({:login => 'john',
+                :password => '1234567',
+                :email => 'john@john.com',
+                :profile_id => 1,
+                :state => 'active'})
 end
 
 And /^I am logged into the admin panel$/ do
   visit '/accounts/login'
   fill_in 'user_login', :with => 'admin'
   fill_in 'user_password', :with => 'aaaaaaaa'
+  click_button 'Login'
+  if page.respond_to? :should
+    page.should have_content('Login successful')
+  else
+    assert page.has_content?('Login successful')
+  end
+end
+
+And /^I have created some articles$/ do
+  visit path_to("the new article page")
+  fill_in("article_title", :with => "Foobar")
+  fill_in("article__body_and_extended_editor", :with => "Lorem Ipsum")
+  click_button("Publish")
+
+  visit path_to("the new article page")
+  fill_in("article_title", :with => "Hello World")
+  fill_in("article__body_and_extended_editor", :with => "This is a test")
+  click_button("Publish")
+end
+
+Given /^I am not logged in as an administrator$/ do
+  visit '/accounts/login'
+  fill_in 'user_login', :with => 'john'
+  fill_in 'user_password', :with => '1234567'
   click_button 'Login'
   if page.respond_to? :should
     page.should have_content('Login successful')
@@ -275,4 +305,16 @@ end
 
 Then /^show me the page$/ do
   save_and_open_page
+end
+
+And /^(?:|I)am not logged in as an administrator$/ do
+  visit '/account/login'
+  fill_in 'user_login', :with => 'john'
+  fill_in 'user_password', :with => '1234567'
+  click_button 'Login'
+  if page.respond_to? :should
+    page.should have_content('Login successful')
+  else
+    assert page.has_content?('Login successful')
+  end
 end

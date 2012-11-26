@@ -424,6 +424,7 @@ class Article < Content
       comment.save!
     end    
     self.save!
+    article2.destroy
   end
 
   protected

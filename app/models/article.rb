@@ -420,8 +420,9 @@ class Article < Content
     article2 = Article.find(other_article_id)
     self.body += article2.body
     article2.comments.each do |comment|
-      comment.article = self
-      comment.save!
+      comment2 = comment.clone
+      comment2.article = self
+      comment2.save!
     end    
     self.save!
     article2.destroy

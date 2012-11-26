@@ -2,6 +2,7 @@
 
 <%= render "admin/shared/edit", { :form_type => "article", :form_action => { :action => "new", :id => @article.id , :class => ('autosave')} } %>
 
+<% if current_user.admin? %>
   <div class='merge_div'>
      <h4><%= _("Merge Articles") %></h4>
      <div>
@@ -12,4 +13,5 @@
        <% end %>
      </div>
   </div>
+<% end %>
 

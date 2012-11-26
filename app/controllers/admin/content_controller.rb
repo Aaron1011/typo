@@ -14,6 +14,7 @@ class Admin::ContentController < Admin::BaseController
   def merge
     if !current_user.admin?
       flash[:error] = _("Only administrators can merge articles.")
+      redirect_to :action => 'index'
     else
       article = Article.find(params[:id])
       article.merge_with(params[:merge_with])

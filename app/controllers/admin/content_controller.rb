@@ -17,7 +17,7 @@ class Admin::ContentController < Admin::BaseController
     else
       article = Article.find(params[:id])
       article.merge_with(params[:merge_with])
-      redirect_to :action => 'index'
+      redirect_to :action => 'edit', :id => params[:id]
     end
   end
 

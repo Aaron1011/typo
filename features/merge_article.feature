@@ -13,6 +13,6 @@ Feature: Merge Articles
     Given I am logged into the admin panel
     And I have created some articles
     And I am on the edit page for article 1
-    And I fill in "merge_with" with "2"
+    And I fill in "merge_with" with "3"
     And I press "Merge"
     Then I should see "Lorem Ipsum Hello World"

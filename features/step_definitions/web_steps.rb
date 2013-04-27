@@ -130,6 +130,17 @@ end
 # TODO: Add support for checkbox, select or option
 # based on naming conventions.
 #
+
+Given /^I have created the following catagories:$/ do |fields|
+  fields.rows_hash.each do |title, keywords, permalink, description|
+    When %{I fill in "Name" with "#{title}"}
+    When %{I fill in "Keywords" with "#{keywords}"}
+    When %{I fill in "Permalink" with "#{permalink}"}
+    When %{I fill in "Description" with "#{description}"}
+  end
+    When %{I fill in "Title" with "#{title}"dd
+end
+
 When /^(?:|I )fill in the following:$/ do |fields|
   fields.rows_hash.each do |name, value|
     When %{I fill in "#{name}" with "#{value}"}

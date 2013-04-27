@@ -25,6 +25,8 @@ module NavigationHelpers
     #     user_profile_path(User.find_by_login($1))
     when /^the edit page for article (\d+)$/i
        "/admin/content/edit/#{$1}"
+    when /^the catagories page$/
+      '/admin/catagories'
 
     else
       begin
